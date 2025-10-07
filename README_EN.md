@@ -53,7 +53,7 @@ Copy the example config file and fill in your information:
 
 ```bash
 cd src/main/resources
-cp config.properties.example config.properties
+touch config.properties
 ```
 
 Edit `config.properties`:

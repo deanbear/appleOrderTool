@@ -81,7 +81,7 @@ appleOrderTool/
 
 ```bash
 cd src/main/resources
-cp config.properties.example config.properties
+touch config.properties
 ```
 
 编辑 `config.properties`：
@@ -248,7 +248,6 @@ String signature = offerUtil.createSignature(
 
 2. **配置文件**：
    - `config.properties` 已添加到 `.gitignore`
-   - 仅提供 `config.properties.example` 作为模板
 
 3. **根证书验证**：
    - 始终验证服务器通知和交易数据的签名
