@@ -115,14 +115,30 @@ public class AppStoreService {
     }
     
     /**
-     * 获取退款历史
+     * 获取退款历史（自动处理分页）
      */
-    public RefundHistoryResponse getRefundHistory(String transactionId) 
+    public List<String> getRefundHistory(String transactionId)
             throws APIException, IOException {
         logger.info("查询退款历史，交易ID: {}", transactionId);
-        RefundHistoryResponse response = apiClient.getRefundHistory(transactionId, null);
-        logger.info("退款历史查询成功");
-        return response;
+
+        List<String> allTransactions = new ArrayList<>();
+        RefundHistoryResponse response = null;
+        do {
+            String revision = response != null ? response.getRevision() : null;
+            response = apiClient.getRefundHistory(transactionId, revision);
+
+            if (response.getSignedTransactions() != null) {
+                allTransactions.addAll(response.getSignedTransactions());
+            }
+
+            logger.debug("获取到 {} 条退款记录，还有更多: {}",
+                response.getSignedTransactions() != null ? response.getSignedTransactions().size() : 0,
+                response.getHasMore());
+
+        } while (Boolean.TRUE.equals(response.getHasMore()));
+
+        logger.info("共获取 {} 条退款记录", allTransactions.size());
+        return allTransactions;
     }
     
     /**

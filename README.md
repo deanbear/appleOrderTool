@@ -80,8 +80,7 @@ appleOrderTool/
 复制配置文件示例并填入真实信息：
 
 ```bash
-cd src/main/resources
-touch config.properties
+cp src/main/resources/config.properties.example src/main/resources/config.properties
 ```
 
 编辑 `config.properties`：
@@ -247,7 +246,8 @@ String signature = offerUtil.createSignature(
    - 建议使用环境变量或密钥管理服务
 
 2. **配置文件**：
-   - `config.properties` 已添加到 `.gitignore`
+   - `config.properties` 已添加到 `.gitignore`，不会被提交到版本控制
+   - 请基于 `config.properties.example` 创建自己的配置文件
 
 3. **根证书验证**：
    - 始终验证服务器通知和交易数据的签名

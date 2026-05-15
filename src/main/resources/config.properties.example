@@ -1,0 +1,22 @@
+# Apple App Store Server API 配置示例
+# 请复制此文件为 config.properties 并填入真实的配置信息
+
+# App Store Connect API 配置
+appstore.issuer.id=your-issuer-id
+appstore.key.id=your-key-id
+appstore.bundle.id=com.yourcompany.yourapp
+
+#appstore.environment=SANDBOX
+appstore.environment=PRODUCTION
+
+# 私钥文件路径 (相对路径或绝对路径)
+appstore.private.key.path=/path/to/SubscriptionKey_XXXXX.p8
+
+# Apple 根证书路径 (多个证书用逗号分隔)
+appstore.root.ca.paths=/path/to/AppleRootCA-G2.cer,/path/to/AppleRootCA-G3.cer
+
+# 生产环境需要 App Apple ID
+appstore.app.apple.id=1234567890
+
+# 日志配置
+logging.level=INFO

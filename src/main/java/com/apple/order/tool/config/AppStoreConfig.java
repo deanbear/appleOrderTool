@@ -2,7 +2,7 @@ package com.apple.order.tool.config;
 
 import com.apple.itunes.storekit.model.Environment;
 
-import java.io.FileInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -76,7 +76,8 @@ public class AppStoreConfig {
     
     private InputStream loadCertificate(String path) {
         try {
-            return new FileInputStream(path);
+            byte[] bytes = Files.readAllBytes(Paths.get(path));
+            return new ByteArrayInputStream(bytes);
         } catch (IOException e) {
             throw new RuntimeException("无法加载根证书: " + path, e);
         }
