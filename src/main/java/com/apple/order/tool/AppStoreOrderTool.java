@@ -197,20 +197,32 @@ public class AppStoreOrderTool {
         System.out.println(objectMapper.writeValueAsString(response));
     }
     
-    private void handleRefundHistory(Scanner scanner) throws APIException, IOException {
+    private void handleRefundHistory(Scanner scanner) throws APIException, IOException, VerificationException {
         System.out.print("\n请输入交易ID: ");
         String transactionId = scanner.nextLine().trim();
-        
+
         if (transactionId.isEmpty()) {
             System.out.println("交易ID不能为空");
             return;
         }
-        
+
         System.out.println("\n>>> 查询退款历史...");
-        RefundHistoryResponse response = service.getRefundHistory(transactionId);
-        
-        System.out.println("\n✓ 退款历史查询成功");
-        System.out.println(objectMapper.writeValueAsString(response));
+        List<String> transactions = service.getRefundHistory(transactionId);
+
+        System.out.println("\n✓ 共找到 " + transactions.size() + " 条退款记录");
+
+        if (!transactions.isEmpty()) {
+            System.out.print("\n是否显示详细信息？(y/n): ");
+            String show = scanner.nextLine().trim().toLowerCase();
+
+            if ("y".equals(show)) {
+                for (int i = 0; i < transactions.size(); i++) {
+                    System.out.println("\n--- 退款 " + (i + 1) + " ---");
+                    var decodedTransaction = service.verifyAndDecodeTransaction(transactions.get(i));
+                    System.out.println(objectMapper.writeValueAsString(decodedTransaction));
+                }
+            }
+        }
     }
     
     private void handleReceiptExtraction(Scanner scanner) throws IOException {

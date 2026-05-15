@@ -41,7 +41,7 @@ bin/
 .DS_Store
 
 # Config files with sensitive data
-config.properties
+**/config.properties
 *.p8
 
 # Logs
